@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 spring:
   application:
@@ -11,11 +11,8 @@ spring:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
           '[/**]':
-            allowedOrigins:
-            - "http://localhost:8100"
-            - "http://localhost"
-            - "https://localhost"
-            - "capacitor://localhost"
+            allowedOriginPatterns:
+              - "*"
             allowedMethods:
               - GET
               - POST
@@ -69,7 +66,11 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    hostname: ${RAILWAY_PRIVATE_DOMAIN:localhost}
+    prefer-ip-address: false
+    non-secure-port: ${PORT:8080}
 
 management:
   endpoints:
