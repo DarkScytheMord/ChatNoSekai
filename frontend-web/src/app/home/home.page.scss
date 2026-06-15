@@ -1,0 +1,180 @@
+.auth-page {
+  --background: #10101a;
+}
+
+.auth-background {
+  min-height: 100%;
+  padding: 28px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(255, 68, 140, 0.35), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(90, 120, 255, 0.35), transparent 28%),
+    linear-gradient(135deg, #11111d 0%, #1c1230 45%, #0d1020 100%);
+}
+
+.auth-background::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.6;
+}
+
+.manga-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(1px);
+  opacity: 0.75;
+}
+
+.circle-one {
+  width: 180px;
+  height: 180px;
+  top: -50px;
+  right: -40px;
+  background: #ff4f9a;
+}
+
+.circle-two {
+  width: 140px;
+  height: 140px;
+  bottom: 80px;
+  left: -50px;
+  background: #715bff;
+}
+
+.circle-three {
+  width: 90px;
+  height: 90px;
+  bottom: 20px;
+  right: 30px;
+  background: #00d9ff;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 430px;
+  position: relative;
+  z-index: 2;
+  border-radius: 26px;
+  overflow: hidden;
+  background: rgba(22, 22, 36, 0.92);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.45),
+    0 0 30px rgba(255, 79, 154, 0.22);
+  backdrop-filter: blur(12px);
+}
+
+.brand-section {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.brand-badge {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 14px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  font-weight: 900;
+  color: white;
+  background: linear-gradient(135deg, #ff4f9a, #715bff);
+  box-shadow: 0 0 28px rgba(255, 79, 154, 0.55);
+  border: 3px solid rgba(255, 255, 255, 0.22);
+}
+
+.brand-section h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+.brand-section p {
+  margin: 10px 0 0;
+  color: #cfcfe8;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.mode-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 18px;
+}
+
+.mode-tabs button {
+  border: 0;
+  padding: 11px 10px;
+  border-radius: 999px;
+  background: transparent;
+  color: #bdbde0;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mode-tabs button.active {
+  background: linear-gradient(135deg, #ff4f9a, #715bff);
+  color: white;
+  box-shadow: 0 6px 18px rgba(255, 79, 154, 0.28);
+}
+
+.anime-input {
+  --background: rgba(255, 255, 255, 0.07);
+  --border-color: rgba(255, 255, 255, 0.14);
+  --highlight-color-focused: #ff4f9a;
+  --color: #ffffff;
+  --placeholder-color: #bdbde0;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.main-button {
+  margin-top: 18px;
+  --border-radius: 18px;
+  --background: linear-gradient(135deg, #ff4f9a, #715bff);
+  --background-hover: linear-gradient(135deg, #ff6aad, #8270ff);
+  --box-shadow: 0 10px 28px rgba(255, 79, 154, 0.32);
+  font-weight: 800;
+  height: 48px;
+}
+
+.switch-link {
+  width: 100%;
+  margin-top: 14px;
+  border: 0;
+  background: transparent;
+  color: #7fe7ff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.message {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.message.error {
+  color: #ff7a9f;
+}
+
+.message.success {
+  color: #78ffbe;
+}

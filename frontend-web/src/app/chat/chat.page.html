@@ -1,0 +1,69 @@
+<ion-content fullscreen class="chat-page">
+  <div class="chat-background">
+    <div class="manga-circle circle-one"></div>
+    <div class="manga-circle circle-two"></div>
+
+    <div class="chat-shell">
+      <header class="chat-header">
+        <button type="button" class="back-button" (click)="goBack()">
+          ←
+        </button>
+
+        <div>
+          <p class="eyebrow">Anime Chat</p>
+          <h1>Conversación #{{ conversationId }}</h1>
+        </div>
+
+        <button type="button" class="refresh-button" (click)="loadHistory()">
+          ⟳
+        </button>
+      </header>
+
+      <ion-text color="danger" *ngIf="errorMessage">
+        <p class="message error">{{ errorMessage }}</p>
+      </ion-text>
+
+      <div class="messages-container">
+        <div class="loading-state" *ngIf="loading">
+          Cargando mensajes...
+        </div>
+
+        <div class="empty-state" *ngIf="!loading && messages.length === 0">
+          <div class="empty-icon">💬</div>
+          <p>Aún no hay mensajes.</p>
+          <small>Envía el primer mensaje para iniciar el chat.</small>
+        </div>
+
+        <div
+          class="message-bubble"
+          *ngFor="let message of messages"
+          [class.mine]="isMyMessage(message)"
+          [class.theirs]="!isMyMessage(message)">
+          <div class="bubble-content">
+            <span class="sender">
+              {{ isMyMessage(message) ? 'Yo' : 'Usuario ' + message.senderId }}
+            </span>
+
+            <p>{{ message.content }}</p>
+
+            <small>{{ message.sentAt }}</small>
+          </div>
+        </div>
+      </div>
+
+      <form class="chat-input-area" (ngSubmit)="sendMessage()">
+        <ion-item class="anime-input">
+          <ion-input
+            placeholder="Escribe un mensaje..."
+            [(ngModel)]="newMessage"
+            name="newMessage">
+          </ion-input>
+        </ion-item>
+
+        <ion-button type="submit" class="send-button">
+          Enviar
+        </ion-button>
+      </form>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,102 @@
+<ion-content fullscreen class="auth-page">
+  <div class="auth-background">
+    <div class="manga-circle circle-one"></div>
+    <div class="manga-circle circle-two"></div>
+    <div class="manga-circle circle-three"></div>
+
+    <ion-card class="auth-card">
+      <ion-card-content>
+        <div class="brand-section">
+          <div class="brand-badge">漫</div>
+
+          <h1>CHATNOSEKAI</h1>
+
+          <p>
+            {{
+              isRegisterMode
+                ? 'Crea tu cuenta y entra al mundo otaku'
+                : 'Inicia sesión para conversar y descubrir anime/manga'
+            }}
+          </p>
+        </div>
+
+        <div class="mode-tabs">
+          <button
+            type="button"
+            [class.active]="!isRegisterMode"
+            (click)="isRegisterMode = false">
+            Login
+          </button>
+
+          <button
+            type="button"
+            [class.active]="isRegisterMode"
+            (click)="isRegisterMode = true">
+            Registro
+          </button>
+        </div>
+
+        <form (ngSubmit)="submit()">
+          <ion-item class="anime-input" *ngIf="isRegisterMode">
+            <ion-input
+              label="Nombre completo"
+              labelPlacement="floating"
+              [(ngModel)]="fullName"
+              name="fullName">
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="anime-input">
+            <ion-input
+              label="Correo"
+              labelPlacement="floating"
+              type="email"
+              [(ngModel)]="email"
+              name="email">
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="anime-input">
+            <ion-input
+              label="Contraseña"
+              labelPlacement="floating"
+              type="password"
+              [(ngModel)]="password"
+              name="password">
+            </ion-input>
+          </ion-item>
+
+          <ion-button
+            expand="block"
+            type="submit"
+            class="main-button"
+            [disabled]="loading">
+            {{
+              loading
+                ? 'Cargando...'
+                : isRegisterMode
+                  ? 'Crear cuenta'
+                  : 'Entrar'
+            }}
+          </ion-button>
+        </form>
+
+        <button type="button" class="switch-link" (click)="changeMode()">
+          {{
+            isRegisterMode
+              ? 'Ya tengo una cuenta'
+              : 'No tengo cuenta, quiero registrarme'
+          }}
+        </button>
+
+        <ion-text color="danger" *ngIf="errorMessage">
+          <p class="message error">{{ errorMessage }}</p>
+        </ion-text>
+
+        <ion-text color="success" *ngIf="successMessage">
+          <p class="message success">{{ successMessage }}</p>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

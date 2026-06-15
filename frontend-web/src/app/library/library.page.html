@@ -1,0 +1,175 @@
+<ion-header class="library-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        ←
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Mi Biblioteca</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="goToCreate()">
+        +
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="library-background">
+
+  <section class="hero-card">
+    <div>
+      <p class="eyebrow">ChatNoSekai</p>
+
+      <h1>Biblioteca Anime/Manga</h1>
+
+      <p class="hero-description">
+        Guarda tus animes y mangas favoritos, controla tu progreso
+        y organiza tu mundo otaku en un solo lugar.
+      </p>
+    </div>
+
+    <div class="hero-symbol">
+      漫
+    </div>
+  </section>
+
+  <section class="stats-grid">
+    <div class="stat-card">
+      <span>Total</span>
+      <strong>{{ items.length }}</strong>
+    </div>
+
+    <div class="stat-card">
+      <span>Anime</span>
+      <strong>{{ getTotalByType('ANIME') }}</strong>
+    </div>
+
+    <div class="stat-card">
+      <span>Manga</span>
+      <strong>{{ getTotalByType('MANGA') }}</strong>
+    </div>
+  </section>
+
+  <section class="actions-panel">
+    <ion-button expand="block" class="main-button" (click)="goToCreate()">
+      + Agregar anime/manga
+    </ion-button>
+
+    <div class="search-box">
+      <ion-input
+        placeholder="Buscar por título..."
+        [(ngModel)]="searchTitle"
+        (keyup.enter)="loadItems()">
+      </ion-input>
+
+      <ion-button size="small" (click)="loadItems()">
+        Buscar
+      </ion-button>
+    </div>
+
+    <div class="filter-row">
+      <button
+        type="button"
+        [class.active]="selectedType === 'ALL'"
+        (click)="changeType('ALL')">
+        Todos
+      </button>
+
+      <button
+        type="button"
+        [class.active]="selectedType === 'ANIME'"
+        (click)="changeType('ANIME')">
+        Anime
+      </button>
+
+      <button
+        type="button"
+        [class.active]="selectedType === 'MANGA'"
+        (click)="changeType('MANGA')">
+        Manga
+      </button>
+
+      <button
+        type="button"
+        class="clear-button"
+        (click)="clearSearch()">
+        Limpiar
+      </button>
+    </div>
+  </section>
+
+  <ion-text color="success" *ngIf="successMessage">
+    <p class="message success">{{ successMessage }}</p>
+  </ion-text>
+
+  <ion-text color="danger" *ngIf="errorMessage">
+    <p class="message error">{{ errorMessage }}</p>
+  </ion-text>
+
+  <div class="loading-box" *ngIf="loading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando biblioteca...</p>
+  </div>
+
+  <section class="empty-card" *ngIf="!loading && items.length === 0">
+    <div class="empty-symbol">☆</div>
+
+    <h2>No tienes registros todavía</h2>
+
+    <p>
+      Agrega tu primer anime o manga para comenzar tu biblioteca personal.
+    </p>
+  </section>
+
+  <section class="items-grid" *ngIf="!loading && items.length > 0">
+    <article class="library-card" *ngFor="let item of items">
+
+      <div
+        class="cover"
+        [style.background-image]="item.imageUrl ? 'url(' + item.imageUrl + ')' : null">
+
+        <div class="cover-placeholder" *ngIf="!item.imageUrl">
+          漫
+        </div>
+
+        <span class="type-badge">
+          {{ getTypeLabel(item.type) }}
+        </span>
+      </div>
+
+      <div class="card-content">
+        <h2>{{ item.title }}</h2>
+
+        <div class="meta-row">
+          <span>{{ getStatusLabel(item.status) }}</span>
+          <span>⭐ {{ item.rating || 0 }}/10</span>
+        </div>
+
+        <p class="description">
+          {{ item.description || 'Sin descripción registrada.' }}
+        </p>
+
+        <div class="card-actions">
+          <ion-button
+            size="small"
+            fill="outline"
+            (click)="goToEdit(item.id)">
+            Editar
+          </ion-button>
+
+          <ion-button
+            size="small"
+            color="danger"
+            fill="outline"
+            (click)="deleteItem(item.id)">
+            Eliminar
+          </ion-button>
+        </div>
+      </div>
+
+    </article>
+  </section>
+
+</ion-content>

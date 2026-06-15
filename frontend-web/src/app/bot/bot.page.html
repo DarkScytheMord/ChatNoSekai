@@ -1,0 +1,92 @@
+<ion-content fullscreen class="bot-page">
+  <div class="bot-background">
+    <div class="manga-circle circle-one"></div>
+    <div class="manga-circle circle-two"></div>
+    <div class="manga-circle circle-three"></div>
+
+    <div class="bot-container">
+      <header class="bot-header">
+        <button type="button" class="back-button" (click)="goBack()">
+          ←
+        </button>
+
+        <div>
+          <p class="eyebrow">Anime Chat</p>
+          <h1>Chatbot Anime/Manga</h1>
+          <p class="subtitle">
+            Pregunta por recomendaciones, nombres de anime o ideas de manga.
+          </p>
+        </div>
+      </header>
+
+      <section class="ask-card">
+        <div class="bot-icon">🤖</div>
+
+        <form (ngSubmit)="ask()">
+          <ion-item class="anime-input">
+            <ion-textarea
+              placeholder="Ej: Hay un anime donde pelean contra titanes, ¿cuál podría ser?"
+              [(ngModel)]="question"
+              name="question"
+              autoGrow="true">
+            </ion-textarea>
+          </ion-item>
+
+          <div class="button-row">
+            <ion-button
+              type="submit"
+              class="main-button"
+              [disabled]="loading">
+              {{ loading ? 'Buscando...' : 'Preguntar' }}
+            </ion-button>
+
+            <button
+              type="button"
+              class="secondary-button"
+              (click)="clearQuestion()">
+              Limpiar
+            </button>
+          </div>
+        </form>
+
+        <ion-text color="danger" *ngIf="errorMessage">
+          <p class="message error">{{ errorMessage }}</p>
+        </ion-text>
+
+        <ion-text color="success" *ngIf="successMessage">
+          <p class="message success">{{ successMessage }}</p>
+        </ion-text>
+      </section>
+
+      <section class="history-section">
+        <div class="section-header">
+          <h2>Historial del bot</h2>
+
+          <button type="button" class="refresh-button" (click)="loadHistory()">
+            Actualizar
+          </button>
+        </div>
+
+        <div class="empty-state" *ngIf="history.length === 0">
+          <div class="empty-icon">✨</div>
+          <p>Aún no tienes consultas.</p>
+          <small>Haz una pregunta para comenzar.</small>
+        </div>
+
+        <article class="history-card" *ngFor="let item of history">
+          <div class="question-box">
+            <span>Pregunta</span>
+            <p>{{ item.question }}</p>
+          </div>
+
+          <div class="answer-box">
+            <span>Respuesta</span>
+            <p>{{ item.answer }}</p>
+          </div>
+
+          <small class="date-text">{{ item.createdAt }}</small>
+        </article>
+      </section>
+    </div>
+  </div>
+</ion-content>

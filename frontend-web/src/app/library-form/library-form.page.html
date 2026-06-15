@@ -1,0 +1,175 @@
+<ion-header class="form-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">←</ion-button>
+    </ion-buttons>
+
+    <ion-title>
+      {{ editMode ? 'Editar registro' : 'Nuevo registro' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="form-background">
+
+  <section class="hero-card">
+    <div>
+      <p class="eyebrow">ChatNoSekai Library</p>
+
+      <h1>
+        {{ editMode ? 'Editar anime/manga' : 'Agregar anime/manga' }}
+      </h1>
+
+      <p>
+        Completa la información para organizar tu biblioteca personal.
+      </p>
+    </div>
+
+    <div class="hero-symbol">本</div>
+  </section>
+
+  <div class="loading-box" *ngIf="loading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando registro...</p>
+  </div>
+
+  <section class="form-card" *ngIf="!loading">
+
+    <ion-text color="success" *ngIf="successMessage">
+      <p class="message success">{{ successMessage }}</p>
+    </ion-text>
+
+    <ion-text color="danger" *ngIf="errorMessage">
+      <p class="message error">{{ errorMessage }}</p>
+    </ion-text>
+
+    <div class="preview-card">
+      <div
+        class="preview-cover"
+        [style.background-image]="form.imageUrl ? 'url(' + form.imageUrl + ')' : null">
+
+        <div class="preview-placeholder" *ngIf="!form.imageUrl">
+          漫
+        </div>
+      </div>
+
+      <div class="preview-info">
+        <span>{{ getTypeLabel(form.type) }}</span>
+
+        <h2>{{ form.title || 'Título de la obra' }}</h2>
+
+        <p>
+          {{ getStatusLabel(form.status) }} · ⭐ {{ form.rating || 0 }}/10
+        </p>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label>Título</label>
+      <input
+        type="text"
+        placeholder="Ej: Naruto, One Piece, Jujutsu Kaisen"
+        [(ngModel)]="form.title" />
+    </div>
+
+    <div class="form-field">
+      <label>Tipo</label>
+      <select [(ngModel)]="form.type">
+        <option *ngFor="let type of types" [value]="type.value">
+          {{ type.label }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label>Estado</label>
+      <select [(ngModel)]="form.status">
+        <option *ngFor="let status of statuses" [value]="status.value">
+          {{ status.label }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label>Calificación 0 a 10</label>
+      <input
+        type="number"
+        min="0"
+        max="10"
+        [(ngModel)]="form.rating" />
+    </div>
+
+    <div class="form-field" *ngIf="!isLocalImage()">
+      <label>URL de imagen</label>
+      <input
+        type="text"
+        placeholder="https://..."
+        [(ngModel)]="form.imageUrl" />
+    </div>
+
+    <div class="file-panel">
+      <input
+        #fileInput
+        type="file"
+        accept="image/*"
+        hidden
+        (change)="onImageSelected($event)" />
+
+      <ion-button
+        expand="block"
+        fill="outline"
+        class="file-button"
+        (click)="fileInput.click()">
+        Seleccionar imagen desde el dispositivo
+      </ion-button>
+
+      <p class="file-name" *ngIf="selectedImageName">
+        Archivo seleccionado: {{ selectedImageName }}
+      </p>
+
+      <p class="file-name" *ngIf="!selectedImageName && !form.imageUrl">
+        Puedes usar una URL o seleccionar una imagen desde el dispositivo.
+      </p>
+
+      <p class="file-name" *ngIf="isLocalImage()">
+        Imagen cargada desde archivo.
+      </p>
+
+      <ion-button
+        *ngIf="form.imageUrl"
+        expand="block"
+        fill="clear"
+        class="remove-image-button"
+        (click)="clearImage(fileInput)">
+        Quitar imagen
+      </ion-button>
+    </div>
+
+    <div class="form-field">
+      <label>Descripción</label>
+      <textarea
+        rows="4"
+        placeholder="Escribe una pequeña descripción..."
+        [(ngModel)]="form.description">
+      </textarea>
+    </div>
+
+    <ion-button
+      expand="block"
+      class="save-button"
+      [disabled]="saving"
+      (click)="save()">
+      {{ saving ? 'Guardando...' : (editMode ? 'Guardar cambios' : 'Crear registro') }}
+    </ion-button>
+
+    <ion-button
+      expand="block"
+      fill="clear"
+      class="cancel-button"
+      (click)="goBack()">
+      Cancelar
+    </ion-button>
+
+  </section>
+
+</ion-content>

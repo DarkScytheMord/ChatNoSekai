@@ -1,0 +1,108 @@
+<ion-content fullscreen class="main-page">
+  <div class="main-background">
+    <div class="manga-circle circle-one"></div>
+    <div class="manga-circle circle-two"></div>
+    <div class="manga-circle circle-three"></div>
+
+    <div class="main-container">
+      <section class="hero-card">
+        <div>
+          <p class="eyebrow">ChatNoSekai</p>
+
+          <h1>Hola, {{ fullName }}</h1>
+
+          <p class="subtitle">
+            Tu ID de usuario es:
+            <strong>{{ currentUserId }}</strong>
+          </p>
+        </div>
+
+        <button class="logout-button" type="button" (click)="logout()">
+          Salir
+        </button>
+      </section>
+
+      <section class="actions-grid">
+        <button type="button" class="anime-action-card" (click)="openBot()">
+          <span class="action-icon">🤖</span>
+          <span>Chatbot Anime/Manga</span>
+          <small>Buscar recomendaciones de anime o manga</small>
+        </button>
+
+        <button type="button" class="anime-action-card" (click)="openLibrary()">
+          <span class="action-icon">📚</span>
+          <span>Mi Biblioteca</span>
+          <small>Organiza tus animes y mangas favoritos</small>
+        </button>
+
+        <div class="anime-action-card form-card">
+          <span class="action-icon">💬</span>
+          <span>Crear conversación</span>
+          <small>Ingresa el ID de otro usuario registrado</small>
+
+          <ion-item class="anime-input">
+            <ion-input
+              label="ID usuario"
+              labelPlacement="floating"
+              type="number"
+              [(ngModel)]="otherUserId">
+            </ion-input>
+          </ion-item>
+
+          <ion-button
+            expand="block"
+            class="main-button"
+            [disabled]="loading"
+            (click)="createConversation()">
+            {{ loading ? 'Creando...' : 'Crear chat' }}
+          </ion-button>
+        </div>
+      </section>
+
+      <ion-text color="danger" *ngIf="errorMessage">
+        <p class="message error">{{ errorMessage }}</p>
+      </ion-text>
+
+      <ion-text color="success" *ngIf="successMessage">
+        <p class="message success">{{ successMessage }}</p>
+      </ion-text>
+
+      <section class="conversation-section">
+        <div class="section-header">
+          <h2>Mis conversaciones</h2>
+
+          <button type="button" class="refresh-button" (click)="loadConversations()">
+            Actualizar
+          </button>
+        </div>
+
+        <ion-card
+          class="conversation-card"
+          *ngFor="let conversation of conversations"
+          (click)="openConversation(conversation.id)">
+          <ion-card-content>
+            <div class="conversation-row">
+              <div class="conversation-avatar">漫</div>
+
+              <div class="conversation-info">
+                <h3>{{ conversation.title }}</h3>
+
+                <p>ID conversación: {{ conversation.id }}</p>
+
+                <p>
+                  Miembros:
+                  {{ conversation.memberIds.join(', ') }}
+                </p>
+              </div>
+            </div>
+          </ion-card-content>
+        </ion-card>
+
+        <div class="empty-state" *ngIf="conversations.length === 0">
+          <p>Aún no tienes conversaciones.</p>
+          <small>Crea una usando el ID de otro usuario.</small>
+        </div>
+      </section>
+    </div>
+  </div>
+</ion-content>
