@@ -73,6 +73,9 @@ eureka:
     non-secure-port: ${PORT:8080}
 
 management:
+  endpoint:
+    gateway:
+      access: read-only
   endpoints:
     web:
       exposure:
