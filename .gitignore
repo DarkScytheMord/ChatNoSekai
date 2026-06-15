@@ -1,0 +1,28 @@
+# Node / Ionic / Angular
+node_modules/
+www/
+dist/
+.angular/
+.vscode/
+*.log
+
+# Android build
+frontend-web/android/.gradle/
+frontend-web/android/app/build/
+frontend-web/android/build/
+
+# Java / Spring Boot
+target/
+*.class
+
+# IDE
+.idea/
+*.iml
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Variables sensibles
+.env
+application-secret.properties
